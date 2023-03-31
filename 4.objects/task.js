@@ -8,35 +8,36 @@ function Student (name, gender, age) {
  
 }
 
-let student1 = new Student("Andrey", "male", 28);
-let student2 = new Student("Anton", "male", 25);
-let student3 = new Student("Vlad", "male", 28);
+let student = new Student("Andrey", "male", 28);
+
 
 Student.prototype.setSubject = function (subjectName) {
-    this.setSubject = subjectName;
+    this.subject = subjectName;
 }
 
 
 
 Student.prototype.addMarks = function (...marks) {
-  if (Student.hasOwnProperty("marks") === true) {
-    addMarks = marks;
+  if (this.marks) {
+    return this.marks.push(...marks);
+  } else {
+    return 'otchislen';
   }
 }
 
 Student.prototype.getAverage = function () {
-    if (Student.HasOwnProperty("marks") !== false) {
-        getAverage = 0;
-      } else {
-        getAverage = addMarcs.reduce((acc, item, index) => {acc += item
-            if (index === addMarks.length){
-                return acc/addMarks.length} },0);
-      }
+    if (this.marks && this.marks.length) {
+       
+          return this.marks.reduce((acc, item) => acc += item ,0) / this.marks.length;
+      
+} else {
+  return 0;
+}
 }
 
 Student.prototype.exclude = function (reason) {
     delete this.subject;
     delete this.marks;
-    this.exclude = reason;
+    this.excluded = reason;
   
 }
