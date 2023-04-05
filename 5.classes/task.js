@@ -15,7 +15,7 @@
     }
 
     set  state (number) {
-        lf (number < 0) {
+        if (number < 0) {
             this._state = 0
         } else if (number > 100) {
             this._state = 100
@@ -24,7 +24,7 @@
         }
     }
 
-    get stateNumber() {
+    get state() {
         return  this._state
     }
     
@@ -43,8 +43,9 @@
 
  class Book extends PrintEditionItem {
 
-    constructor(name, releaseDate, pagesCount) {
+    constructor(author, name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount)
+        this.author = author;
         this.type = 'book';
     }
 
@@ -52,8 +53,8 @@
 
 class NovelBook extends Book {
 
-    constructor(name, releaseDate, pagesCount) {
-        super(name, releaseDate, pagesCount)
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount)
         this.type = 'novel';
     }
 
@@ -61,8 +62,8 @@ class NovelBook extends Book {
 
 class FantasticBook extends Book {
 
-    constructor(name, releaseDate, pagesCount) {
-        super(name, releaseDate, pagesCount)
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount)
         this.type = 'fantastic';
     }
 
@@ -85,15 +86,14 @@ class Library {
 
     addBook(book){
         if (book.state > 30) {
-            books.state.push(book)
+            this.books.push(book)
         }
     }
 
     findBookBy(type, value){
 
-        if (this.books.find(this.books => this.books[type] === value)) {
-            return this.books.find(this.books => this.books[type] === value)
-
+        if (this.books.find(item => item[type] === value)) {
+            return this.books.find(item => item[type] === value)
         } else {
             return null
         }
@@ -101,9 +101,10 @@ class Library {
     }
 
     giveBookByName(bookName) {
-        if (this.books.find(this.books => this.name === bookName)) {
-            let deleteBook = this.books.IndexOf(this.books => this.name === bookName);
-            this.books.slice(this.books.indexOf(deleteBook), 1)
+        if (this.books.find(item => item.name === bookName)) {
+            let deleteBook = this.books.find(item => item.name === bookName);
+            return this.books.splice(this.books.indexOf(deleteBook), 1)[0]
+            
         }else {
             return null
         }
