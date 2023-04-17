@@ -30,7 +30,8 @@ class AlarmClock {
         let Hour = Data.getHours();
         let Minutes = Data.getMinutes();
 
-        let hourMinut = `${Hour}:${Minutes}`
+
+        let hourMinut = `0${Hour}:0${Minutes}`
 
         return hourMinut
     }
@@ -41,7 +42,7 @@ class AlarmClock {
         }
 
         this.intervalId = setInterval(() => 
-        {this.alarmCollection.forEach((elem) => {if (elem.time === getCurrentFormattedTime()) {
+        {this.alarmCollection.forEach((elem) => {if (elem.time === this.getCurrentFormattedTime() && elem.canCall === true) {
             elem.canCall = false;
             elem.callback();
            }
@@ -63,7 +64,7 @@ class AlarmClock {
     }
 
     clearAlarms() {
-        stop();
+        this.stop();
         this.alarmCollection = [];
     }
 
